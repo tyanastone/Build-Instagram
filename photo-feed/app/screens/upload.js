@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View, Image} from 'react-native';
+import { f, auth, database, storage} from '../../config/config';
 
 class upload extends React.Component{
     constructor(props){
