@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View, Image} from 'react-native';
+import { TouchableOpacity, FlatList, StyleSheet, Text, View, Image} from 'react-native';
 import { f, auth, database, storage} from '../../config/config';
 
 
@@ -73,7 +73,8 @@ class feed extends React.Component{
                         url: photoObj.url,
                         caption: photoObj.caption,
                         posted: that.timeConverter(photoObj.posted),
-                        author: data
+                        author: data,
+                        authorId: photoObj.author
                     });
                     that.setState({
                         refresh: false,
@@ -110,7 +111,10 @@ class feed extends React.Component{
 <View key={index} style={{width: '100%', overflow:'hidden', marginBottom: 5, justifyContent: 'space-between', borderBottomWidth: 1, borderColor: 'grey'}}>
                     <View style={{padding: 5, width: '100%', flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Text>{item.posted}</Text>
+                        <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('User', {userId: item.authorId})}>
                         <Text>{item.author}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View>
                         <Image
@@ -120,7 +124,10 @@ class feed extends React.Component{
                     </View>
                     <View style={{padding:5}}>
                         <Text>{item.caption}</Text>
-                        <Text style={{marginTop: 10, textAlign: 'center'}}>View Comments..</Text>
+                        <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Comments', {userId: item.id})}>
+                        <Text style={{color: 'blue', marginTop: 10, textAlign: 'center'}}>[ View Comments ]</Text>
+                        </TouchableOpacity>
                     </View>
                 </View> 
                     )}  
